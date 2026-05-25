@@ -1,0 +1,62 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: #030303;
+  --color-foreground: #F0F2F5;
+  
+  --color-surface: #0D0E12;
+  --color-surface-2: #12141A;
+  --color-border: #1F242E;
+  
+  --color-primary: #00FF66;
+  --color-primary-foreground: #000000;
+  
+  --color-secondary: #00E5FF;
+  --color-secondary-foreground: #000000;
+  
+  --color-danger: #FF3B3B;
+  --color-danger-foreground: #FFFFFF;
+  
+  --color-warning: #FFB800;
+  --color-warning-foreground: #000000;
+  
+  --color-text-primary: #F0F2F5;
+  --color-text-secondary: #8F96A3;
+  
+  /* Map shadcn UI expected tokens to our custom variables */
+  --color-card: var(--color-surface);
+  --color-card-foreground: var(--color-foreground);
+  --color-popover: var(--color-surface);
+  --color-popover-foreground: var(--color-foreground);
+  --color-muted: var(--color-surface-2);
+  --color-muted-foreground: var(--color-text-secondary);
+  --color-accent: var(--color-surface-2);
+  --color-accent-foreground: var(--color-foreground);
+  --color-destructive: var(--color-danger);
+  --color-destructive-foreground: var(--color-danger-foreground);
+  --color-input: var(--color-border);
+  --color-ring: var(--color-primary);
+  
+  /* Dashboard Dimensions */
+  --sidebar-width: 280px;
+  --topbar-height: 64px;
+  
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}

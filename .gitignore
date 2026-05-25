@@ -1,0 +1,41 @@
+# Dependency directories
+node_modules/
+ntl-intelligence-app/node_modules/
+ntl-intelligence-app/functions/node_modules/
+
+# Next.js build output
+.next/
+ntl-intelligence-app/.next/
+ntl-intelligence-app/out/
+ntl-intelligence-app/build/
+
+# Firebase temporary files / logs
+.firebase/
+ntl-intelligence-app/.firebase/
+firebase-debug.log
+firestore-debug.log
+pubsub-debug.log
+ui-debug.log
+*.log
+
+# Local environment variables / secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+ntl-intelligence-app/.env*
+ntl-intelligence-app/functions/.env*
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db

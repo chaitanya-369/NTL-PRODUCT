@@ -1,0 +1,24 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    function isSuperAdmin() { return request.auth != null && request.auth.token.role == 'super_admin'; }
+    function isBoardLead() { return request.auth != null && request.auth.token.role == 'board_lead'; }
+    function isLabLead() { return request.auth != null && request.auth.token.role == 'lab_lead'; }
+    function isActiveMember() { return request.auth != null && request.auth.token.role in ['super_admin', 'board_lead', 'lab_lead', 'lab_member']; }
+
+    match /{allPaths=**} {
+      allow read, write: if isSuperAdmin();
+    }
+
+    match /resumes/{userId}/{fileName} {
+      allow read: if isLabLead() || isBoardLead() || isSuperAdmin() || request.auth.uid == userId;
+      allow write: if request.auth.uid == userId;
+    }
+
+    match /vault/{fileName} {
+      allow read: if isActiveMember();
+      allow write: if isSuperAdmin();
+    }
+  }
+}

@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isSuperAdmin() { return request.auth != null && request.auth.token.role == 'super_admin'; }
+    function isBoardLead() { return request.auth != null && request.auth.token.role == 'board_lead'; }
+    function isLabLead() { return request.auth != null && request.auth.token.role == 'lab_lead'; }
+    function isActiveMember() { return request.auth != null && request.auth.token.role in ['super_admin', 'board_lead', 'lab_lead', 'lab_member']; }
+
+    match /users/{userId} {
+      allow read: if request.auth.uid == userId || isLabLead() || isBoardLead() || isSuperAdmin();
+      allow write: if request.auth.uid == userId || isSuperAdmin();
+    }
+
+    match /opportunities/{oppId} {
+      allow read: if isActiveMember();
+      allow write: if isSuperAdmin();
+    }
+
+    match /raw_opportunities/{docId} {
+      allow read, write: if isSuperAdmin();
+    }
+
+    match /squad_recommendations/{squadId} {
+      allow read: if isLabLead() || isBoardLead() || isSuperAdmin();
+      allow write: if isSuperAdmin();
+    }
+
+    match /squads/{squadId} {
+      allow read: if isActiveMember();
+      allow write: if isSuperAdmin();
+    }
+
+    match /notifications/{docId} {
+      allow read: if request.auth.uid in resource.data.recipientIds || isSuperAdmin();
+      allow write: if isSuperAdmin();
+    }
+
+    match /knowledge_vault/{docId} {
+      allow read: if isActiveMember();
+      allow write: if isSuperAdmin();
+    }
+
+    match /hardware_inventory/{docId} {
+      allow read: if isActiveMember();
+      allow write: if isLabLead() || isBoardLead() || isSuperAdmin();
+    }
+
+    match /analytics/{docId} {
+      allow read: if isActiveMember();
+      allow write: if isSuperAdmin();
+    }
+
+    match /system_config/{docId} {
+      allow read: if isActiveMember();
+      allow write: if isSuperAdmin();
+    }
+
+    match /activity_feed/{docId} {
+      allow read: if isActiveMember();
+      allow write: if isSuperAdmin();
+    }
+  }
+}
